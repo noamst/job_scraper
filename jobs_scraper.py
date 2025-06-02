@@ -22,6 +22,23 @@ def load_structure_cache():
             return json.load(f)
     return {}
 
+
+
+def extract_json_array_from_text(raw_text: str):
+    """
+    Extracts the first JSON array from raw LLM output, ignoring any commentary or markdown.
+    """
+    try:
+        # Match the first valid JSON array in the string (greedy but non-overreaching)
+        match = re.search(r"\[\s*{.*?}\s*\]", raw_text, re.DOTALL)
+        if match:
+            json_array_str = match.group(0)
+            return json.loads(json_array_str)
+        else:
+            raise ValueError("❌ No JSON array found in LLM output.")
+    except json.JSONDecodeError as e:
+        raise ValueError(f"❌ Invalid JSON array: {str(e)}")
+    
 @mcp.tool()
 async def get_jobs(company: str) -> str:
     """Find jobs for a given company from LastStartup.
@@ -72,8 +89,8 @@ async def get_jobs(company: str) -> str:
         structure = job_structure_cache[domain]
     else:
         try:
-            llm_content = LastStartupScraper.ask_llm_for_content(html,matched_url)
-            structure = LastStartupScraper.extract_consistent_selectors(html, llm_content)
+            llm_content = extract_json_array_from_text(LastStartupScraper.ask_llm_for_content(html,matched_url))
+            structure = LastStartupScraper.extract_consistent_selectors(html, llm_content,domain)
             job_structure_cache[domain] = structure
             #save_structure_cache(job_structure_cache)  # Save updated cache
         except Exception as e:
@@ -128,18 +145,18 @@ async def get_jobs_from_url(career_page_url: str) -> str:
         structure = job_structure_cache[domain]
     else:
         try:
-            llm_content = LastStartupScraper.ask_llm_for_content(html,career_page_url)
-            structure = LastStartupScraper.extract_consistent_selectors(html, llm_content)
+            llm_content = extract_json_array_from_text(LastStartupScraper.ask_llm_for_content(html,career_page_url))
+            structure = LastStartupScraper.extract_consistent_selectors(html, llm_content,domain)
             job_structure_cache[domain] = structure
             #save_structure_cache(job_structure_cache)  # Save updated cache
         except Exception as e:
-            return f"❌ Failed to infer structure for {domain}: {str(e)}"
+            return f"❌ Failed to infer structure for {domain} for content {llm_content}: {str(e)}"
 
     # Step 5: Extract jobs
     try:
         jobs = LastStartupScraper.extract_jobs_with_precise_schema(html, structure)
     except Exception as e:
-        return f"❌ Error parsing jobs: {str(e)}"
+        return f"❌ Error parsing jobs {llm_content}: {str(e)}"
 
     if not jobs:
         return f"📭 No structured jobs found for  {career_page_url}"

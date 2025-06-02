@@ -119,7 +119,7 @@ class LastStartupScraper:
             [
             {
                 "title": "Frontend Developer",
-                "link": "/careers/frontend-developer",
+                "link": "/careers/frontend-developer", 
                 "location": "Remote",
                 "department": "Engineering"
             },
@@ -286,6 +286,7 @@ class LastStartupScraper:
 
         for job in jobs:
             for field in fields:
+                
                 value = job.get(field)
                 if not value:
                     continue
