@@ -1,0 +1,14 @@
+{
+  "testcorp.com": {
+    "job_container": "main > div",
+    "title": "div > h3 > a",
+    "link": "div > h3 > a",
+    "location": "div > p:nth-child(2)",
+    "department": "div > p:nth-child(3)"
+  },
+  "https://www.empathy.com/careers": {
+    "title": "html.flex.min-h-full > body.flex.min-h-full.flex-1.bg-beige.text-plum > div#__next > div.relative.flex.w-full.max-w-[100vw].flex-1.flex-col > div.relative.h-full.min-h-screen > main > div.relative.pt-16.md:pt-24.pb-0.bg-white.text-plum > div.relative.mx-auto.max-w-7xl.px-4.lg:px-4 > ul.flex.flex-col.gap-2.md:gap-4 > li > a.flex.flex-col.gap-2.rounded-lg.border.border-plum-16.p-4.hover:bg-plum-2.md:flex-row.md:items-center.md:p-8 > div.text-h4.flex-1.text-plum",
+    "link": "html.flex.min-h-full > body.flex.min-h-full.flex-1.bg-beige.text-plum > div#__next > div.relative.flex.w-full.max-w-[100vw].flex-1.flex-col > div.relative.h-full.min-h-screen > main > div.relative.pt-16.md:pt-24.pb-0.bg-white.text-plum > div.relative.mx-auto.max-w-7xl.px-4.lg:px-4 > ul.flex.flex-col.gap-2.md:gap-4 > li > a.flex.flex-col.gap-2.rounded-lg.border.border-plum-16.p-4.hover:bg-plum-2.md:flex-row.md:items-center.md:p-8",
+    "location": "html.flex.min-h-full > body.flex.min-h-full.flex-1.bg-beige.text-plum > div#__next > div.relative.flex.w-full.max-w-[100vw].flex-1.flex-col > div.relative.h-full.min-h-screen > main > div.relative.pt-16.md:pt-24.pb-0.bg-white.text-plum > div.relative.mx-auto.max-w-7xl.px-4.lg:px-4 > div.mb-10.flex.flex-col.justify-end.gap-2.md:flex-row.md:items-center > div.w-full.md:max-w-xs > div.text-body-standard.relative.flex.w-full.items-center.rounded-lg.border.bg-white.pl-4.focus:outline-none.focus-within:border-plum.h-12.border-plum-16.text-plum.appearance-none.bg-dropdown.bg-right-4.bg-no-repeat.!rounded-full.pl-6.focus-within:outline.focus-within:outline-1.focus-within:outline-sky.focus-within:ring-2.focus-within:ring-white > select.absolute.top-0.left-0.h-full.w-full.opacity-0 > option.text-plum"
+  }
+}
