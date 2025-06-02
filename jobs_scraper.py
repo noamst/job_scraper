@@ -92,6 +92,62 @@ async def get_jobs(company: str) -> str:
         f"- {job['title']} ({job['location']})" for job in jobs
     )
 
+
+@mcp.tool()
+async def get_jobs_from_url(career_page_url: str) -> str:
+    """Find jobs from a given career page url.
+
+    Args:
+        career_page_url: A career page url.
+    """
+    scraper = LastStartupScraper(BASE_URL)
+
+    
+    if not career_page_url:
+        return f"❌ page '{career_page_url}' not found."
+
+    domain = career_page_url
+
+    # Step 2: Download HTML
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            response = await client.get(career_page_url)
+            response.raise_for_status()
+            html = response.text
+    except Exception as e:
+        return f"❌ Failed to fetch {career_page_url}: {str(e)}"
+
+    cleaned_html = LastStartupScraper.clean_html_for_llm_no_spaces(html)
+
+    # Step 3: Load cache
+    job_structure_cache = load_structure_cache()
+    print(domain)
+    
+    # Step 4: Retrieve or infer structure
+    if domain in job_structure_cache:
+        structure = job_structure_cache[domain]
+    else:
+        try:
+            llm_content = LastStartupScraper.ask_llm_for_content(html,career_page_url)
+            structure = LastStartupScraper.extract_consistent_selectors(html, llm_content)
+            job_structure_cache[domain] = structure
+            #save_structure_cache(job_structure_cache)  # Save updated cache
+        except Exception as e:
+            return f"❌ Failed to infer structure for {domain}: {str(e)}"
+
+    # Step 5: Extract jobs
+    try:
+        jobs = LastStartupScraper.extract_jobs_with_precise_schema(html, structure)
+    except Exception as e:
+        return f"❌ Error parsing jobs: {str(e)}"
+
+    if not jobs:
+        return f"📭 No structured jobs found for  {career_page_url}"
+
+    return f"📋 Jobs at {career_page_url}:\n\n" + "\n".join(
+        f"- {job['title']} ({job['location']})" for job in jobs
+    )
+
 if __name__ == "__main__":
     print("Hello from Jobs Scraper!")
 
