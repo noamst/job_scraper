@@ -168,6 +168,31 @@ async def get_jobs_from_url(career_page_url: str) -> str:
 
 
 
+@mcp.tool()
+async def get_job_page_content(url: str) -> str:
+    """Fetch and clean the HTML content of a given job page.
+
+    Args:
+        url: The full URL to a job posting (e.g., https://example.com/careers/software-engineer)
+    """
+    job_page = ""
+    try:
+        async with httpx.AsyncClient(timeout=10, headers={
+            "User-Agent": "Mozilla/5.0"
+        }) as client:
+            response = await client.get(url)
+            response.raise_for_status()
+            job_page = response.text
+    except Exception as e:
+        return f"❌ Failed to fetch job page: {str(e)}"
+
+    try:
+        cleaned = LastStartupScraper.clean_html_for_llm_no_spaces(job_page)
+        return cleaned
+    except Exception as e:
+        return f"❌ Failed to clean HTML: {str(e)}"
+
+
 if __name__ == "__main__":
     print("Hello from Jobs Scraper!")
 
