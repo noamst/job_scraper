@@ -409,19 +409,5 @@ def extract_json_array_from_text(raw_text: str):
         raise ValueError(f"❌ Invalid JSON array: {str(e)}")
    
 if __name__ == "__main__":
-    base_url = "https://wsc-sports.com/careers/"  # Replace with the actual base URL
-    scraper = LastStartupScraper(base_url)
-    html1 = scraper.fetch_page(base_url)
-    if not html1:
-        print("Failed to fetch the HTML content of the base URL.")
-        exit(1)
-    cleaned_html = LastStartupScraper.clean_html_for_llm_no_spaces(html1)
-
-    #llm_content = extract_json_array_from_text(LastStartupScraper.ask_llm_for_content(cleaned_html,base_url))
-    llm_content = [{'title': 'Recruitment Marketing Specialist', 'link': '/career/recruitment-marketing-specialist/', 'location': 'ISRAEL', 'department': ''}, {'title': 'Employee Experience Specialist', 'link': '/career/employee-experience-specialist/', 'location': 'ISRAEL', 'department': ''}, {'title': 'Business Applications Implementer', 'link': '/career/business-applications-implementer/', 'location': '', 'department': ''}, {'title': 'GenAI Product Manager', 'link': '/career/genai-product-manager/', 'location': '', 'department': ''}, {'title': 'VP Marketing', 'link': '/career/vp-marketing/', 'location': '', 'department': ''}, {'title': 'DevOps Engineer', 'link': '/career/devops-engineer/', 'location': '', 'department': ''}, {'title': 'Product & R&D Ops Team Leader', 'link': '/career/product-rd-ops-team-leader/', 'location': '', 'department': ''}, {'title': 'QA Manual & Automation Engineer', 'link': '/career/qa-manual-automation-engineer/', 'location': '', 'department': ''}, {'title': 'New Verticals Support Specialist', 'link': '/career/new-verticals-support-specialist/', 'location': '', 'department': ''}, {'title': 'Customer Support Specialist', 'link': '/career/customer-support-specialist/', 'location': '', 'department': ''}, {'title': 'Frontend Tech Lead', 'link': '/career/frontend-tech-lead/', 'location': '', 'department': ''}, {'title': 'Backend Developer', 'link': '/career/backend-developer/', 'location': '', 'department': ''}, {'title': 'Director of Engineering', 'link': '/career/director-of-engineering/', 'location': '', 'department': ''}, {'title': 'Senior GenAI/NLP Algorithm Developer', 'link': '/career/senior-genai-nlp-algorithm-developer/', 'location': '', 'department': ''}, {'title': 'NLP Algorithm Developer', 'link': '/career/nlp-algorithm-developer/', 'location': '', 'department': ''}, {'title': 'Studio Product Manager', 'link': '/career/studio-product-manager/', 'location': '', 'department': ''}, {'title': 'NLP Team Leader', 'link': '/career/nlp-team-leader/', 'location': '', 'department': ''}, {'title': 'Technical Account Manager', 'link': '/career/technical-account-manager/', 'location': 'LONDON', 'department': ''}, {'title': 'Digital Strategy Manager', 'link': '/career/digital-strategy-manager/', 'location': '', 'department': ''}, {'title': 'Account Manager', 'link': '/career/account-manager/', 'location': 'NEW YORK', 'department': ''}, {'title': 'Client Solutions & Delivery Manager', 'link': '/career/client-solutions-delivery-manager/', 'location': '', 'department': ''}]
-    #print(llm_content)
-    structure = LastStartupScraper.extract_consistent_selectors(html1, llm_content,base_url)
-    jobs = LastStartupScraper.extract_jobs_with_precise_schema(html1, structure)
-    print(jobs)
-
+    print("main method for testing")
     

@@ -15,5 +15,10 @@
     "title": "html > body.wp-singular.page-template-default.page.page-id-17.wp-theme-wsc_upro > div.global-wrapper > main.content > section.block-careers-list > div.container-fluid > div.list > ul > li > a > div.d-flex.align-items-center.justify-content-between.fade-in > span.link-text",
     "link": "html > body.wp-singular.page-template-default.page.page-id-17.wp-theme-wsc_upro > div.global-wrapper > main.content > section.block-careers-list > div.container-fluid > div.list > ul > li > a",
     "location": "html > body.wp-singular.page-template-default.page.page-id-17.wp-theme-wsc_upro > div.global-wrapper > main.content > section.block-careers-list > div.container-fluid > div.list > h3"
+  },
+  "https://www.evinced.com/careers": {
+    "title": "html > body > div#__next > main > section.Careers_positions_list__NClTM > div > div.Careers_position_cards__8gPwC > div.Careers_position_card__ZPrEP > h3",
+    "link": "html > body > div#__next > main > section.Careers_positions_list__NClTM > div > div.Careers_position_cards__8gPwC > div.Careers_position_card__ZPrEP > div.Careers_card_buttons__EfsF0 > a.btn_outline",
+    "location": "html > body > div#__next > main > section.Careers_positions_list__NClTM > div > div.Careers_position_cards__8gPwC > div.Careers_position_card__ZPrEP > div.Careers_location__I9AUR"
   }
 }
