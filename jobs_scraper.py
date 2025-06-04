@@ -3,7 +3,7 @@ import os
 import sys
 from typing import Any
 import asyncio
-from urllib.parse import urlparse
+from urllib.parse import urlparse,urljoin
 import httpx
 from mcp.server.fastmcp import FastMCP
 from laststartupScraping import LastStartupScraper  # Make sure this import works
@@ -89,7 +89,7 @@ async def get_jobs(company: str) -> str:
         structure = job_structure_cache[domain]
     else:
         try:
-            llm_content = extract_json_array_from_text(LastStartupScraper.ask_llm_for_content(html,matched_url))
+            llm_content = extract_json_array_from_text(LastStartupScraper.ask_llm_for_content(cleaned_html,matched_url))
             structure = LastStartupScraper.extract_consistent_selectors(html, llm_content,domain)
             job_structure_cache[domain] = structure
             #save_structure_cache(job_structure_cache)  # Save updated cache
@@ -139,13 +139,14 @@ async def get_jobs_from_url(career_page_url: str) -> str:
     # Step 3: Load cache
     job_structure_cache = load_structure_cache()
     print(domain)
-    
+    llm_content = ""
     # Step 4: Retrieve or infer structure
     if domain in job_structure_cache:
         structure = job_structure_cache[domain]
+    
     else:
         try:
-            llm_content = extract_json_array_from_text(LastStartupScraper.ask_llm_for_content(html,career_page_url))
+            llm_content = extract_json_array_from_text(LastStartupScraper.ask_llm_for_content(cleaned_html,career_page_url))
             structure = LastStartupScraper.extract_consistent_selectors(html, llm_content,domain)
             job_structure_cache[domain] = structure
             #save_structure_cache(job_structure_cache)  # Save updated cache
@@ -162,8 +163,10 @@ async def get_jobs_from_url(career_page_url: str) -> str:
         return f"📭 No structured jobs found for  {career_page_url}"
 
     return f"📋 Jobs at {career_page_url}:\n\n" + "\n".join(
-        f"- {job['title']} ({job['location']})" for job in jobs
+        f"- {job['title']} ({job['location']}) ({urljoin(career_page_url, job['link'])})" for job in jobs
     )
+
+
 
 if __name__ == "__main__":
     print("Hello from Jobs Scraper!")
