@@ -148,7 +148,6 @@ async def get_jobs_from_url(career_page_url: str) -> str:
             llm_content = extract_json_array_from_text(LastStartupScraper.ask_llm_for_content(cleaned_html,career_page_url))
             structure = LastStartupScraper.extract_consistent_selectors(html, llm_content,domain)
             job_structure_cache[domain] = structure
-            #save_structure_cache(job_structure_cache)  # Save updated cache
         except Exception as e:
             return f"❌ Failed to infer structure for {domain} for content {llm_content}: {str(e)}"
 
@@ -156,6 +155,9 @@ async def get_jobs_from_url(career_page_url: str) -> str:
     try:
         jobs = LastStartupScraper.extract_jobs_with_precise_schema(html, structure)
     except Exception as e:
+        llm_content = extract_json_array_from_text(LastStartupScraper.ask_llm_for_content(cleaned_html,career_page_url))
+        structure = LastStartupScraper.extract_consistent_selectors(html, llm_content,domain)
+        job_structure_cache[domain] = structure
         return f"❌ Error parsing jobs {llm_content}: {str(e)}"
 
     if not jobs:
