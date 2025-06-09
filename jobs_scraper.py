@@ -79,10 +79,10 @@ async def get_jobs(company: str) -> str:
         return f"❌ Failed to fetch {matched_url}: {str(e)}"
 
     cleaned_html = LastStartupScraper.clean_html_for_llm_no_spaces(html)
-
+    llm_content = ""
     # Step 3: Load cache
     job_structure_cache = load_structure_cache()
-    print(domain)
+    #print(domain)
     
     # Step 4: Retrieve or infer structure
     if domain in job_structure_cache:
@@ -138,7 +138,6 @@ async def get_jobs_from_url(career_page_url: str) -> str:
 
     # Step 3: Load cache
     job_structure_cache = load_structure_cache()
-    print(domain)
     llm_content = ""
     # Step 4: Retrieve or infer structure
     if domain in job_structure_cache:
