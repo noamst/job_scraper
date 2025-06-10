@@ -10,7 +10,6 @@ A robust, intelligent job scraping microservice that dynamically learns and cach
   - Uses `ask_llm_for_content()` + `extract_consistent_selectors()` to infer job card structure dynamically.
 - 🧠 **LLM-Fallback**: If no schema exists, uses a language model to understand the HTML and derive a reusable structure.
 - 💾 **Schema Cache**: Saves learned schemas per domain to a persistent `job_structure_cache.json`.
-- ✅ **Custom User-Agent Support**: Bypasses bot protections (403 Forbidden errors).
 - ⚙️ **MCP Tool Integration**: Exposed as an MCP tool via `@mcp.tool()` for plug-and-play use in autonomous agents or pipelines.
 
 ---
